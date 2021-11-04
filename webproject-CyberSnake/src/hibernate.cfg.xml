@@ -18,6 +18,6 @@
 		<mapping class="datamodel.Event" />
 		<mapping class="datamodel.Register" />
 		<mapping class="datamodel.Review" />
-		<mapping class="datamodel.TimeSlot" />
+		<mapping class="datamodel.Timeslot" />
 	</session-factory>
 </hibernate-configuration>
