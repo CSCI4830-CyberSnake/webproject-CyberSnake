@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:500');
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: #383b54;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    color: #ecf0f1;
+    
+}
+.checked {
+  color: orange;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+li, a{ 
+  font-size: 16px;
+  text-decoration: none;
+}
+
+mp{
+  font-size:80px;
+}
+#container {
+  padding: 15px;
+}
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px ;
+}
+#nav ul{
+    list-style-type: none;
+}
+
+.nav_links {
+  list-style: none;
+}
+
+.nav_links li{
+  display: inline-block;
+  padding: 0px 20px;
+}
+
+nav_links li a{
+  transition: all 0.3s ease 0s;
+}
+
+.nav_links li a:hover{
+  color: #245275;
+}
+
+input[type=submit]{
+  display: inline-block;
+  padding: 0px 20px;
+}
+
+input[type=submit]:hover{
+  color: #245275;
+}
+
+#centerContent{
+  margin-left: 100px;
+  margin-right: 100px;
+  height: 800px;
+  padding: 10px;
+  text-align: center;
+}
+
+#content{
+  margin-left: 100px;
+  margin-right: 100px;
+  height: 800px;
+  padding: 10px;
+}
+
+#block{
+  padding: 15px;
+}
+
+

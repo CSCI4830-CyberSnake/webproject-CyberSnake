@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @since J2SE-1.8 
  * CREATE TABLE events 
  * (	eventId INT NOT NULL AUTO_INCREMENT,
  * 		username varchar(),
@@ -22,9 +21,6 @@ import javax.persistence.Table;
 @Table(name = "events")
 public class Event implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id // primary key

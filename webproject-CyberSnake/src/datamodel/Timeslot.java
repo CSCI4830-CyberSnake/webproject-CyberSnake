@@ -4,36 +4,37 @@ import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @since J2SE-1.8 
  * CREATE TABLE timeslots 
- * (	eventId INT NOT NULL,
+ * (	timeslotId INT NOT NULL
+ * 		eventId INT,
  * 		date date,
  * 		time varchar(),
  * 		occupancy int,
- *      PRIMARY KEY (eventId, date, time));
+ *      PRIMARY KEY (timeslotId));
  */
 @Entity
 @Table(name = "timeslots")
-public class TimeSlot implements Serializable{
+public class Timeslot implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	@Id // primary key
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "timeslotId")
+	private Integer timeslotId;
+	
 	@Column(name = "eventId")
 	private Integer eventId;
 	
-	@Id
 	@Column(name = "date")
 	private java.sql.Date date;
 	
-	@Id
 	@Column(name = "time")
 	private String time;
 	
@@ -41,16 +42,20 @@ public class TimeSlot implements Serializable{
 	private int occupancy;
 
 
-	public TimeSlot() {
+	public Timeslot() {
 	}
 
-	public TimeSlot(Integer eventId, Date date, String time, Integer occupancy) {
+	public Timeslot(Integer eventId, Date date, String time, Integer occupancy) {
 		this.eventId = eventId;
 		this.date = date;
 		this.time = time;
 		this.occupancy = occupancy;
 	}
 
+	public Integer getTimeslotId() {
+		return timeslotId;
+	}
+	
 	public Integer getEventId() {
 		return eventId;
 	}

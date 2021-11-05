@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @since J2SE-1.8 
  * CREATE TABLE accounts 
  * (	username varchar() NOT NULL,
  * 		firstName varchar(),
@@ -19,16 +18,14 @@ import javax.persistence.Table;
  * 		zip int,
  * 		email varchar(),
  * 		phone varchar(),
- * 		type char(1),
  * 		password varchar(),
+ * 		admin boolean
  * 		PRIMARY KEY (username));
  */
 @Entity
 @Table(name = "accounts")
 public class Account implements Serializable{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -59,17 +56,17 @@ public class Account implements Serializable{
 	@Column(name = "phone")
 	private String phone;
 
-	@Column(name = "type")
-	private char type; // A for admin, N for normal
-
 	@Column(name = "password")
 	private String password;
+	
+	@Column(name = "admin")
+	private boolean admin; // true for admin, false for normal
 
 	public Account() {
 	}
 
 	public Account(String username, String firstName, String lastName, String address, String city, String state,
-			int zip, String email, String phone, char type, String password) {
+			int zip, String email, String phone, String password, boolean admin) {
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -79,8 +76,8 @@ public class Account implements Serializable{
 		this.zip = zip;
 		this.email = email;
 		this.phone = phone;
-		this.type = type;
 		this.password = password;
+		this.admin = admin;
 	}
 
 	public String getUsername() {
@@ -155,12 +152,12 @@ public class Account implements Serializable{
 		this.phone = phone;
 	}
 
-	public char getType() {
-		return type;
+	public boolean getAdmin() {
+		return admin;
 	}
 
-	public void setType(char type) {
-		this.type = type;
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 
 	public String getPassword() {

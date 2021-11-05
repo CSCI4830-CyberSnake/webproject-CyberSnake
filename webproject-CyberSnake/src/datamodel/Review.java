@@ -4,66 +4,51 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @since J2SE-1.8 
  * CREATE TABLE reviews 
- * (	reviewId INT NOT NULL AUTO_INCREMENT,
- * 		username varchar(),
+ * (	username varchar(),
+ * 		eventId int,
  * 		stars int,
  * 		comment varchar(),
- *      PRIMARY KEY (eventId));
+ * 		anon boolean
+ *      PRIMARY KEY (username, eventId));
  */
 @Entity
 @Table(name = "reviews")
 public class Review implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "reviewId")
-	private Integer reviewId;
-	
 	@Column(name = "username")
 	private String username;
+	
+	@Id
+	@Column(name = "eventId")
+	private int eventId;
 	
 	@Column(name = "stars")
 	private int stars;
 	
 	@Column(name = "comment")
 	private String comment;
+	
+	@Column(name = "anon")
+	private boolean anon;
 
 
 	public Review() {
 	}
 
-	public Review(Integer reviewId, String username, int stars, String comment) {
-		this.reviewId = reviewId;
+	public Review(String username, int eventId, int stars, String comment, boolean anon) {
 		this.username = username;
+		this.eventId = eventId;
 		this.stars = stars;
 		this.comment = comment;
-	}
-	
-	public Review(String username, int stars, String comment) {
-		this.username = username;
-		this.stars = stars;
-		this.comment = comment;
-	}
-
-	public Integer getReviewId() {
-		return reviewId;
-	}
-
-	public void setReviewId(Integer reviewId) {
-		this.reviewId = reviewId;
+		this.anon = anon;
 	}
 
 	public String getUsername() {
@@ -72,6 +57,14 @@ public class Review implements Serializable{
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	
+	public int getEventId() {
+		return eventId;
+	}
+
+	public void setEventId(int eventId) {
+		this.eventId = eventId;
 	}
 
 	public int getStars() {
@@ -88,6 +81,14 @@ public class Review implements Serializable{
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	
+	public boolean getAnon() {
+		return anon;
+	}
+
+	public void setAnon(boolean anon) {
+		this.anon = anon;
 	}
 	
 }
