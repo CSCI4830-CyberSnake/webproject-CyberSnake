@@ -41,17 +41,97 @@
 			</div>
 		</div>
 		<div id="content">
-			<div id="block">
-				<h1>Hello, <%= account.getFirstName() %>!<br></h1>
-			</div>
+		
+		<%
+		int register = -1, cancel = -1, review = -1, event = -1, time = -1;
+		
+		if(request.getParameterMap().containsKey("register"))
+	    	  register = Integer.valueOf(request.getParameter("register"));
+		
+		if(request.getParameterMap().containsKey("cancel"))
+	    	  cancel = Integer.valueOf(request.getParameter("cancel"));
+		
+		if(request.getParameterMap().containsKey("review"))
+	    	  review = Integer.valueOf(request.getParameter("review"));
+		
+		if(request.getParameterMap().containsKey("event"))
+	    	  event = Integer.valueOf(request.getParameter("event"));
+		
+		if(request.getParameterMap().containsKey("time"))
+	    	  time = Integer.valueOf(request.getParameter("time"));
+		
+		if(register == 0) { %>
+			<div class="alert0">
+	        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+	        Success! You have successfully registered to an event!
+	      	</div>
+		<% }
+		if(register == 1) { %>
+			<div class="alert0">
+	        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+	        Warning! Event could no be registered!
+	      	</div>
+		<% }
+		if(cancel == 0) { %>
+			<div class="alert0">
+	        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+	        Success! You have successfully cancelled registration to an event!
+	      	</div>
+		<% }
+		if(cancel == 1) { %>
+			<div class="alert0">
+	        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+	        Warning! Registration to an event could not be cancelled!
+	      	</div>
+		<% }
+		if(review == 0) { %>
+			<div class="alert0">
+	        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+	        Success! You have successfully posted a review!
+	      	</div>
+		<% }
+		if(review == 1) { %>
+			<div class="alert0">
+	        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+	        Warning! Your review was not posted!
+	      	</div>
+		<% }
+		if(event == 0) { %>
+			<div class="alert0">
+	        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+	        Success! You have successfully created an event!
+	      	</div>
+		<% }
+		if(event == 1) { %>
+			<div class="alert0">
+	        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+	        Warning! Event could not be created!
+	      	</div>
+		<% }
+		if(time == 0) { %>
+			<div class="alert0">
+	        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+	        Success! You have successfully added a time-slot to an event!
+	      	</div>
+		<% }
+		if(time == 1) { %>
+			<div class="alert0">
+	        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+	        Warning! The time-slot could not be created!
+	      	</div>
+		<% }%>
 			
 			<div id="block">
-				<h2>My Registered Events:</h2>
+				<h2>My Upcoming Events:</h2>
 			</div>
 			
-			<% 	List<Register> listRegisters = UtilRegister.listRegisters(account.getUsername()); 
-				if(listRegisters.size()==0) { %>
-					<p>You have not registered for any events yet!</p>
+			<% 	List<Register> upcoming = UtilRegister.listUpcoming(account.getUsername()); 
+				if(upcoming.size()==0) { %>
+					<table>
+						<tr>
+							<th>You have no upcoming events!</th>
+						</tr>
+					</table>
 			<% } else {%>	
 				<table>
 					<tr>
@@ -60,12 +140,44 @@
 						<th>Time</th>
 					</tr>
 					
-					<% 	for(Register register: listRegisters) {
-							Timeslot timeslot = UtilTimeslot.getTimeslot(register.getTimeslotId());
-							Event event = UtilEvent.getEvent(timeslot.getEventId());
+					<% 	for(Register reg: upcoming) {
+							Timeslot timeslot = UtilTimeslot.getTimeslot(reg.getTimeslotId());
+							Event ev = UtilEvent.getEvent(timeslot.getEventId());
 							%>
 							<tr>
-								<td><%= event.getName() %></td>
+								<td><%= ev.getName() %></td>
+	          					<td><%= timeslot.getDate() %></td>
+	          					<td><%= timeslot.getTime() %></td>
+	          				</tr>
+					<% } %>
+				</table>
+			<% } %>
+			
+			<div id="block">
+				<h2>My Passed Events:</h2>
+			</div>
+			
+			<% 	List<Register> passed = UtilRegister.listPassed(account.getUsername()); 
+				if(passed.size()==0) { %>
+					<table>
+						<tr>
+							<th>You have no passed events!</th>
+						</tr>
+					</table>
+			<% } else {%>	
+				<table>
+					<tr>
+						<th>Event Name</th>
+						<th>Date</th>
+						<th>Time</th>
+					</tr>
+					
+					<% 	for(Register reg: passed) {
+							Timeslot timeslot = UtilTimeslot.getTimeslot(reg.getTimeslotId());
+							Event ev = UtilEvent.getEvent(timeslot.getEventId());
+							%>
+							<tr>
+								<td><%= ev.getName() %></td>
 	          					<td><%= timeslot.getDate() %></td>
 	          					<td><%= timeslot.getTime() %></td>
 	          				</tr>
@@ -80,17 +192,46 @@
 			
 					<% List<Event> events = UtilEvent.listEvents(account.getUsername());
 					if( events.size()==0) {%>
-						<p>You have not created any events yet!</p>
+						<table>
+							<tr>
+								<th>You have not created any events!</th>
+							</tr>
+						</table>
 					<% } else {%>
 						<table>
 							<tr>
 								<th>Event Name</th>
+								<th>Time Slot</th>
 							</tr>
 							
-							<% 	for(Event event: events) {%>
+							<% 	for(Event ev: events) {%>
 									<tr>
-										<td><%= event.getName() %></td>
-			          				</tr>
+										<td><%= ev.getName() %></td>
+			         
+			          				<% List<Timeslot> timeslots = UtilTimeslot.getTimeslotsByEvent(ev.getEventId()); 
+			          				if (timeslots.size()==0) { %>
+										<td>No active time slots!</td>
+										
+			          				<% } else { %>
+			          						<td>
+			          							<table>
+			          								<tr>
+			          									<th>Date</th>
+			          									<th>Time</th>
+			          									<th>Available Seats</th>
+			          								</tr>
+			          					
+			          					<% for( Timeslot timeslot: timeslots) { %>
+			          								<tr>
+			          									<td><%= timeslot.getDate() %></td>
+			          									<td><%= timeslot.getTime() %></td>
+			          									<td><%= timeslot.getOccupancy() %></td>
+			          								</tr>
+			          					<% } %>
+			          							</table>
+			          						</td>
+			          				<% } %>
+			          				
 							<% } %>
 						</table>					
 					<% } %>

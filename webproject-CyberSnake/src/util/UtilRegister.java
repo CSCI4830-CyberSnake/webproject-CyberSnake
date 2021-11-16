@@ -9,7 +9,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import java.time.LocalDate;
+
 import datamodel.Register;
+import datamodel.Timeslot;
 
 
 public class UtilRegister extends UtilDB{
@@ -65,6 +68,66 @@ public class UtilRegister extends UtilDB{
 		}
 		return resultList;
 	}
+	
+	//get all entries from registers table associated with specified username that have not passed yet
+	public static List<Register> listUpcoming(String username) {
+		List<Register> resultList = new ArrayList<Register>();
+
+		Session session = getSessionFactory().openSession();
+		Transaction tx = null;
+
+		try {
+			tx = session.beginTransaction();
+			
+			List<?> registers = session.createCriteria(Register.class).add(Restrictions.eq("username", username)).list();
+			
+			for (Iterator<?> iterator = registers.iterator(); iterator.hasNext();) {
+				Register register = (Register) iterator.next();
+				Timeslot timeslot = UtilTimeslot.getTimeslot(register.getTimeslotId());
+				String date = timeslot.getDate().toString();
+				if(LocalDate.now().isBefore(LocalDate.parse(date)))
+					resultList.add(register);
+			}
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return resultList;
+	}	
+	
+	//get all entries from registers table associated with specified username that have not passed yet
+	public static List<Register> listPassed(String username) {
+		List<Register> resultList = new ArrayList<Register>();
+
+		Session session = getSessionFactory().openSession();
+		Transaction tx = null;
+
+		try {
+			tx = session.beginTransaction();
+			
+			List<?> registers = session.createCriteria(Register.class).add(Restrictions.eq("username", username)).list();
+			
+			for (Iterator<?> iterator = registers.iterator(); iterator.hasNext();) {
+				Register register = (Register) iterator.next();
+				Timeslot timeslot = UtilTimeslot.getTimeslot(register.getTimeslotId());
+				String date = timeslot.getDate().toString();
+				if(LocalDate.now().isAfter(LocalDate.parse(date)))
+					resultList.add(register);
+			}
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return resultList;
+	}	
 
 	//create a new registration entry
 	public static boolean createRegister(String username, String timeslotId) {
