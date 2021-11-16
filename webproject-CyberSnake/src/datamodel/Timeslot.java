@@ -75,6 +75,25 @@ public class Timeslot implements Serializable{
 	public String getTime() {
 		return time;
 	}
+	
+	public String getFormattedTime() {
+		String result = "";
+		String[] times = time.split("\\s*-\\s*");
+		String[] beginTime = times[0].split("\\s*:\\s*");
+		String[] endTime = times[1].split("\\s*:\\s*");
+		if(Integer.parseInt(beginTime[0]) < 12) {
+			if( Integer.parseInt(beginTime[0]) == 0)
+				result += "12:" + beginTime[1] + "am";
+			else
+				result += beginTime[0] + ":" + beginTime[1] + "am";
+			
+		}
+		else {
+			int hour = Integer.parseInt(endTime[0]) - 12;
+			result += String.valueOf(hour) + ":" + endTime[1] + "pm";
+		}
+		return result;
+	}
 
 	public void setTime(String time) {
 		this.time = time;

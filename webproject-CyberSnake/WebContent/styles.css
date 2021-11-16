@@ -11,6 +11,34 @@
     color: #ecf0f1;
     
 }
+
+.alert0 {
+  padding: 20px;
+  background-color: #15c439;
+  color: white;
+}
+
+.alert1 {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
 .checked {
   color: orange;
 }

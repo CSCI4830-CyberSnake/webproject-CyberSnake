@@ -62,7 +62,7 @@ public class UtilEvent extends UtilDB {
 			session.close();
 		}
 		return resultList;
-	}
+	}	
 
 	// get event with specified eventId
 	public static Event getEvent(int eventId) {
@@ -106,5 +106,7 @@ public class UtilEvent extends UtilDB {
 		}
 		return result;
 	}
+	
+	
 
 }

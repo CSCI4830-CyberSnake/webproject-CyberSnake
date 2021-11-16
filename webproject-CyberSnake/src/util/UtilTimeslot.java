@@ -41,7 +41,7 @@ public class UtilTimeslot extends UtilDB{
 		return resultList;
 	}
 
-	//get one specific timeslot
+	//get one specific timeslot based on timeslotId
 	public static Timeslot getTimeslot(int timeslotId) {
 		Timeslot timeslot = null;
 
@@ -63,6 +63,32 @@ public class UtilTimeslot extends UtilDB{
 		}
 		return timeslot;
 	}
+	
+	//get all timeslots associated with an eventId
+	public static List<Timeslot> getTimeslotsByEvent(int eventId) {
+		List<Timeslot> resultList = new ArrayList<Timeslot>();
+
+		Session session = getSessionFactory().openSession();
+		Transaction tx = null;
+
+		try {
+			tx = session.beginTransaction();
+			
+			List<?> timeslots = session.createCriteria(Timeslot.class).add(Restrictions.eq("eventId", eventId)).list();
+			for (Iterator<?> iterator = timeslots.iterator(); iterator.hasNext();) {
+				Timeslot timeslot = (Timeslot) iterator.next();
+				resultList.add(timeslot);
+			}
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return resultList;
+	}	
 
 	//create timeslot
 	public static boolean createTimeslot(String eventId, String date, String time, String occupancy) {
