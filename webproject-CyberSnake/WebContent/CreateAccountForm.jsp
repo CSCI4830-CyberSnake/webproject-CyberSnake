@@ -16,7 +16,7 @@
       			<div id="nav">
         			<ul class="nav_links">
           				<li><a href="main.html">Home</a></li>
-          				<li><a href="login.html">Log In</a></li>
+          				<li><a href="LoginForm.jsp">Log In</a></li>
         			</ul>
       			</div>
     		</div>
