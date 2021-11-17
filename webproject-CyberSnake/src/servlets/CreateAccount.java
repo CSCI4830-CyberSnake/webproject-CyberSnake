@@ -32,10 +32,12 @@ public class CreateAccount extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
+		String code = "CSCI4830";
+		
 		//All fields associated with account creation.
 		String userName = request.getParameter("username");
-		String fName = request.getParameter("firstname");
-		String lName = request.getParameter("lastname");
+		String fName = request.getParameter("firstName");
+		String lName = request.getParameter("lastName");
 		String address = request.getParameter("address");
 		String city = request.getParameter("city");
 		String state = request.getParameter("state");
@@ -45,6 +47,10 @@ public class CreateAccount extends HttpServlet {
 		String password = request.getParameter("password");
 		String admin = request.getParameter("admin");
 		
+		boolean type = false;
+		if( admin.contentEquals(code) ) {
+			type = true;
+		}
 		
 		
 		//Checks if all fields were filled in, if not fills missingInfo attribute and redirects back to the form.
@@ -55,27 +61,29 @@ public class CreateAccount extends HttpServlet {
 		}
 		
 		//Checks if any fields inserted exceeded 20 characters in size redirects with fieldLong attribute set to true if so.
-		if (userName.length() > 20 || fName.length() > 20 || lName.length() > 20 || address.length() > 20 ||
+		else if (userName.length() > 20 || fName.length() > 20 || lName.length() > 20 || address.length() > 20 ||
 				state.length() > 20 || zip.length() > 20 || email.length() > 20 || phone.length() > 20 || password.length() > 20 || 
 				admin.length() > 20) {
 			session.setAttribute("fieldLong", "true");
 			response.sendRedirect("CreateAccountForm.jsp");
 		}
 		//Checks if the account is already in use and will redirect if so.
-		if (UtilAccount.getAccount(userName) != null) {
+		else if (UtilAccount.getAccount(userName) != null) {
 			session.setAttribute("nameTaken", "true");
 			response.sendRedirect("CreateAccountForm.jsp");
 		}
 		
-		
+		//Adds the account to the database, or checks for failure
+		else if (!UtilAccount.createAccount(userName, fName, lName, address, city, state, zip, email, phone, password, type)) {
+			session.setAttribute("notCreated", "true");
+			response.sendRedirect("CreateAccountForm.jsp");
+		}
 
-		//Adds the account to the database.
-		UtilAccount.createAccount(userName, fName, lName, address, city, state, zip, email, phone, password, admin);
-		
-		//Adds the account to the session (attributes are stored as objects so all account methods should work).
-		session.setAttribute("account", UtilAccount.getAccount(userName));
-		
-		response.sendRedirect("UserAccount.jsp");
+		else {
+			//Adds the account to the session (attributes are stored as objects so all account methods should work).
+			session.setAttribute("account", UtilAccount.getAccount(userName));
+			response.sendRedirect("UserAccount.jsp");
+		}
 	}
 
 	/**

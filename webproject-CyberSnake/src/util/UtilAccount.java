@@ -63,16 +63,21 @@ public class UtilAccount extends UtilDB{
 
 	//create a new account
 	public static boolean createAccount(String userName, String firstName, String lastName, String address, String city,
-			String state, String zip, String email, String phone, String password, String admin) {
+			String state, String zip, String email, String phone, String password, Boolean admin) {
 		Session session = getSessionFactory().openSession();
 		boolean result = true;
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
 			session.save(new Account(userName, firstName, lastName, address, city, state, Integer.valueOf(zip), email,
-					phone, password, Boolean.parseBoolean(admin)));
+					phone, password, admin));
 			tx.commit();
 		} catch (HibernateException e) {
+			result = false;
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} catch (java.lang.NumberFormatException e) {
 			result = false;
 			if (tx != null)
 				tx.rollback();
