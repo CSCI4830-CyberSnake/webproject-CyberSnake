@@ -30,7 +30,7 @@
 			<div id="nav">
 				<ul class="nav_links">
 					<% if( account.getAdmin() ) {%>
-						<li><a href="">Create Event</a></li>
+						<li><a href="CreateEvent.jsp">Create Event</a></li>
 						<li><a href="">Add Time slot</a></li>
 					<% } %>
 					<li><a href="">Register</a></li>
@@ -67,7 +67,7 @@
 	      	</div>
 		<% }
 		if(register == 1) { %>
-			<div class="alert0">
+			<div class="alert1">
 	        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
 	        Warning! Event could no be registered!
 	      	</div>
@@ -79,7 +79,7 @@
 	      	</div>
 		<% }
 		if(cancel == 1) { %>
-			<div class="alert0">
+			<div class="alert1">
 	        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
 	        Warning! Registration to an event could not be cancelled!
 	      	</div>
@@ -91,7 +91,7 @@
 	      	</div>
 		<% }
 		if(review == 1) { %>
-			<div class="alert0">
+			<div class="alert1">
 	        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
 	        Warning! Your review was not posted!
 	      	</div>
@@ -103,7 +103,7 @@
 	      	</div>
 		<% }
 		if(event == 1) { %>
-			<div class="alert0">
+			<div class="alert1">
 	        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
 	        Warning! Event could not be created!
 	      	</div>
@@ -115,7 +115,7 @@
 	      	</div>
 		<% }
 		if(time == 1) { %>
-			<div class="alert0">
+			<div class="alert1">
 	        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
 	        Warning! The time-slot could not be created!
 	      	</div>
