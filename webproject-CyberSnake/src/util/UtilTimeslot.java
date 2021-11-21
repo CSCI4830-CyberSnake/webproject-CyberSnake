@@ -10,6 +10,8 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import java.sql.Date;
+import java.time.LocalDate;
+
 import datamodel.Timeslot;
 
 
@@ -89,6 +91,34 @@ public class UtilTimeslot extends UtilDB{
 		}
 		return resultList;
 	}	
+	
+	//get all active timeslots associated with an eventId
+	public static List<Timeslot> getActiveTimeslotsByEvent(int eventId) {
+		List<Timeslot> resultList = new ArrayList<Timeslot>();
+
+		Session session = getSessionFactory().openSession();
+		Transaction tx = null;
+
+		try {
+			tx = session.beginTransaction();
+			
+			List<?> timeslots = session.createCriteria(Timeslot.class).add(Restrictions.eq("eventId", eventId)).list();
+			for (Iterator<?> iterator = timeslots.iterator(); iterator.hasNext();) {
+				Timeslot timeslot = (Timeslot) iterator.next();
+				if( LocalDate.now().isBefore(LocalDate.parse(timeslot.getDate().toString())) &&
+						timeslot.getOccupancy() > 0 )
+					resultList.add(timeslot);
+			}
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return resultList;
+	}
 	
 	//get all timeslots on the same date
 	public static List<Timeslot> getTimeslotsByDate(Date date) {
