@@ -149,6 +149,31 @@ public class UtilRegister extends UtilDB{
 		}
 		return result;
 	}
+	
+	//create a new registration entry
+	public static boolean cancelRegister(String username, String timeslotId) {
+		Session session = getSessionFactory().openSession();
+		Transaction tx = null;
+		boolean result = true;
+		
+		try {
+			tx = session.beginTransaction();
+			
+			Register reg = (Register) session.createCriteria(Register.class).add(Restrictions.eq("username", username))
+				.add(Restrictions.eq("timeslotId", Integer.parseInt(timeslotId))).uniqueResult();
+			
+			session.delete(reg);
+			tx.commit();
+		} catch (HibernateException e) {
+			result= false;
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
 
 
 }

@@ -26,7 +26,7 @@
         <h1>Create a New Event</h1>
       </div>
       
-      <form action="LogInStudent" method="POST">
+      <form action="AddEvent" method="POST">
 	
         <div id="block">Event Name: <input type="text" name="name"> <br /></div>
         <p>Description</p>

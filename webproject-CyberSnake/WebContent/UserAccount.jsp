@@ -147,7 +147,7 @@
 							<tr>
 								<td><%= ev.getName() %></td>
 	          					<td><%= timeslot.getDate() %></td>
-	          					<td><%= timeslot.getTime() %></td>
+	          					<td><%= UtilTimeslot.getFormattedTime(timeslot.getStartTime(), timeslot.getEndTime()) %></td>
 	          				</tr>
 					<% } %>
 				</table>
@@ -179,7 +179,7 @@
 							<tr>
 								<td><%= ev.getName() %></td>
 	          					<td><%= timeslot.getDate() %></td>
-	          					<td><%= timeslot.getTime() %></td>
+	          					<td><%= UtilTimeslot.getFormattedTime(timeslot.getStartTime(), timeslot.getEndTime()) %></td>
 	          				</tr>
 					<% } %>
 				</table>
@@ -224,7 +224,7 @@
 			          					<% for( Timeslot timeslot: timeslots) { %>
 			          								<tr>
 			          									<td><%= timeslot.getDate() %></td>
-			          									<td><%= timeslot.getTime() %></td>
+			          									<td><%= UtilTimeslot.getFormattedTime(timeslot.getStartTime(), timeslot.getEndTime()) %></td>
 			          									<td><%= timeslot.getOccupancy() %></td>
 			          								</tr>
 			          					<% } %>
