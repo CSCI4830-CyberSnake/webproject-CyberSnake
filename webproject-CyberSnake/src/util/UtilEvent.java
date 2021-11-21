@@ -1,6 +1,7 @@
 package util;
 
 import java.util.List;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -10,6 +11,8 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import datamodel.Event;
+import datamodel.Timeslot;
+import util.UtilTimeslot;
 
 
 public class UtilEvent extends UtilDB {
@@ -62,7 +65,44 @@ public class UtilEvent extends UtilDB {
 			session.close();
 		}
 		return resultList;
-	}	
+	}
+	
+	// get all events created by a specific user
+	public static List<Event> getActiveEvents() {
+		List<Event> resultList = new ArrayList<Event>();
+
+		Session session = getSessionFactory().openSession();
+		Transaction tx = null;
+
+		try {
+			tx = session.beginTransaction();
+			List<?> events = session.createQuery("FROM Event").list();
+			for (Iterator<?> iterator = events.iterator(); iterator.hasNext();) {
+				Event event = (Event) iterator.next();
+				int active = 0;
+				
+				List<Timeslot> timeslots = UtilTimeslot.getTimeslotsByEvent(event.getEventId());
+				for( Timeslot timeslot: timeslots ) {
+					if( LocalDate.now().isAfter(LocalDate.parse(timeslot.getDate().toString())) ||
+						timeslot.getOccupancy() == 0 ) {
+						continue;
+					}
+					active++;
+				}
+				
+				if( active > 0)
+					resultList.add(event);
+			}
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return resultList;
+	}
 
 	// get event with specified eventId
 	public static Event getEvent(int eventId) {
