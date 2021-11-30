@@ -35,7 +35,7 @@
 					<% } %>
 					<li><a href="">Register</a></li>
 					<li><a href="">Cancel Registration</a></li>
-					<li><a href="">Make Review</a></li>
+					<li><a href="ChooseEventReview.jsp">Make Review</a></li>
 					<li><a href="/webproject-CyberSnake/Logout">Log Out</a></li>
 				</ul>
 			</div>

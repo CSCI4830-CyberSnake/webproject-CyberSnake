@@ -28,9 +28,9 @@
       
       <form action="AddEvent" method="POST">
 	
-        <div id="block">Event Name: <input type="text" name="name"> <br /></div>
+        <div id="block">Event Name: <input type="text" name="name" required> <br /></div>
         <p>Description</p>
-        <textarea name="description" rows="5" cols="50"></textarea>
+        <textarea name="description" rows="5" cols="50" required></textarea>
         <div id="block"><input type="submit" value="Create Event" /></div>
   
       </form>
