@@ -2,6 +2,7 @@ package util;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 import org.hibernate.HibernateException;
@@ -69,9 +70,10 @@ public class UtilRegister extends UtilDB{
 		return resultList;
 	}
 	
-	//get all entries from registers table associated with specified username that have not passed yet
-	public static List<Register> listUpcoming(String username) {
-		List<Register> resultList = new ArrayList<Register>();
+	//returns a list, sorted by date and time, of timeslots to which the user, specified by username, is registered to
+	//and whose date has not passed yet
+	public static List<Timeslot> listUpcoming(String username) {
+		List<Timeslot> resultList = new ArrayList<Timeslot>();
 
 		Session session = getSessionFactory().openSession();
 		Transaction tx = null;
@@ -85,8 +87,10 @@ public class UtilRegister extends UtilDB{
 				Register register = (Register) iterator.next();
 				Timeslot timeslot = UtilTimeslot.getTimeslot(register.getTimeslotId());
 				String date = timeslot.getDate().toString();
-				if(LocalDate.now().isBefore(LocalDate.parse(date)))
-					resultList.add(register);
+				
+				if( !LocalDate.now().isAfter(LocalDate.parse(date)) )
+					resultList.add(timeslot);
+				
 			}
 			tx.commit();
 		} catch (HibernateException e) {
@@ -96,12 +100,14 @@ public class UtilRegister extends UtilDB{
 		} finally {
 			session.close();
 		}
+		Collections.sort(resultList, new SortByDateTime());
 		return resultList;
 	}	
 	
-	//get all entries from registers table associated with specified username that have not passed yet
-	public static List<Register> listPassed(String username) {
-		List<Register> resultList = new ArrayList<Register>();
+	//returns a list, sorted by date and time, of timeslots to which the user, specified by username, is registered to
+	//and whose date has passed
+	public static List<Timeslot> listPassed(String username) {
+		List<Timeslot> resultList = new ArrayList<Timeslot>();
 
 		Session session = getSessionFactory().openSession();
 		Transaction tx = null;
@@ -115,8 +121,9 @@ public class UtilRegister extends UtilDB{
 				Register register = (Register) iterator.next();
 				Timeslot timeslot = UtilTimeslot.getTimeslot(register.getTimeslotId());
 				String date = timeslot.getDate().toString();
-				if(LocalDate.now().isAfter(LocalDate.parse(date)))
-					resultList.add(register);
+				
+				if( !LocalDate.now().isBefore(LocalDate.parse(date)) )
+					resultList.add(timeslot);
 			}
 			tx.commit();
 		} catch (HibernateException e) {
@@ -126,6 +133,7 @@ public class UtilRegister extends UtilDB{
 		} finally {
 			session.close();
 		}
+		Collections.sort(resultList, new SortByDateTime());
 		return resultList;
 	}	
 

@@ -2,6 +2,7 @@ package util;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 import org.hibernate.HibernateException;
@@ -66,7 +67,7 @@ public class UtilTimeslot extends UtilDB{
 		return timeslot;
 	}
 	
-	//get all timeslots associated with an eventId
+	//get all timeslots associated with an eventId ordered by time and date
 	public static List<Timeslot> getTimeslotsByEvent(int eventId) {
 		List<Timeslot> resultList = new ArrayList<Timeslot>();
 
@@ -89,6 +90,7 @@ public class UtilTimeslot extends UtilDB{
 		} finally {
 			session.close();
 		}
+		Collections.sort(resultList, new SortByDateTime());
 		return resultList;
 	}	
 	

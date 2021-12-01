@@ -125,7 +125,7 @@
 				<h2>My Upcoming Events:</h2>
 			</div>
 			
-			<% 	List<Register> upcoming = UtilRegister.listUpcoming(account.getUsername()); 
+			<% 	List<Timeslot> upcoming = UtilRegister.listUpcoming(account.getUsername()); 
 				if(upcoming.size()==0) { %>
 					<table>
 						<tr>
@@ -140,8 +140,7 @@
 						<th>Time</th>
 					</tr>
 					
-					<% 	for(Register reg: upcoming) {
-							Timeslot timeslot = UtilTimeslot.getTimeslot(reg.getTimeslotId());
+					<% 	for(Timeslot timeslot: upcoming) {
 							Event ev = UtilEvent.getEvent(timeslot.getEventId());
 							%>
 							<tr>
@@ -157,7 +156,7 @@
 				<h2>My Passed Events:</h2>
 			</div>
 			
-			<% 	List<Register> passed = UtilRegister.listPassed(account.getUsername()); 
+			<% 	List<Timeslot> passed = UtilRegister.listPassed(account.getUsername()); 
 				if(passed.size()==0) { %>
 					<table>
 						<tr>
@@ -172,8 +171,7 @@
 						<th>Time</th>
 					</tr>
 					
-					<% 	for(Register reg: passed) {
-							Timeslot timeslot = UtilTimeslot.getTimeslot(reg.getTimeslotId());
+					<% 	for(Timeslot timeslot: passed) {
 							Event ev = UtilEvent.getEvent(timeslot.getEventId());
 							%>
 							<tr>
