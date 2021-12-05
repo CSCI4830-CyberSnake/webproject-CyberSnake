@@ -33,9 +33,9 @@
 						<li><a href="CreateEvent.jsp">Create Event</a></li>
 						<li><a href="">Add Time slot</a></li>
 					<% } %>
-					<li><a href="">Register</a></li>
+					<li><a href="ChooseEventRegister.jsp">Register</a></li>
 					<li><a href="">Cancel Registration</a></li>
-					<li><a href="">Make Review</a></li>
+					<li><a href="ChooseEventReview.jsp">Make Review</a></li>
 					<li><a href="/webproject-CyberSnake/Logout">Log Out</a></li>
 				</ul>
 			</div>
@@ -125,7 +125,7 @@
 				<h2>My Upcoming Events:</h2>
 			</div>
 			
-			<% 	List<Register> upcoming = UtilRegister.listUpcoming(account.getUsername()); 
+			<% 	List<Timeslot> upcoming = UtilRegister.listUpcoming(account.getUsername()); 
 				if(upcoming.size()==0) { %>
 					<table>
 						<tr>
@@ -140,14 +140,13 @@
 						<th>Time</th>
 					</tr>
 					
-					<% 	for(Register reg: upcoming) {
-							Timeslot timeslot = UtilTimeslot.getTimeslot(reg.getTimeslotId());
+					<% 	for(Timeslot timeslot: upcoming) {
 							Event ev = UtilEvent.getEvent(timeslot.getEventId());
 							%>
 							<tr>
 								<td><%= ev.getName() %></td>
 	          					<td><%= timeslot.getDate() %></td>
-	          					<td><%= timeslot.getTime() %></td>
+	          					<td><%= UtilTimeslot.getFormattedTime(timeslot.getStartTime(), timeslot.getEndTime()) %></td>
 	          				</tr>
 					<% } %>
 				</table>
@@ -157,7 +156,7 @@
 				<h2>My Passed Events:</h2>
 			</div>
 			
-			<% 	List<Register> passed = UtilRegister.listPassed(account.getUsername()); 
+			<% 	List<Timeslot> passed = UtilRegister.listPassed(account.getUsername()); 
 				if(passed.size()==0) { %>
 					<table>
 						<tr>
@@ -172,14 +171,13 @@
 						<th>Time</th>
 					</tr>
 					
-					<% 	for(Register reg: passed) {
-							Timeslot timeslot = UtilTimeslot.getTimeslot(reg.getTimeslotId());
+					<% 	for(Timeslot timeslot: passed) {
 							Event ev = UtilEvent.getEvent(timeslot.getEventId());
 							%>
 							<tr>
 								<td><%= ev.getName() %></td>
 	          					<td><%= timeslot.getDate() %></td>
-	          					<td><%= timeslot.getTime() %></td>
+	          					<td><%= UtilTimeslot.getFormattedTime(timeslot.getStartTime(), timeslot.getEndTime()) %></td>
 	          				</tr>
 					<% } %>
 				</table>
@@ -224,7 +222,7 @@
 			          					<% for( Timeslot timeslot: timeslots) { %>
 			          								<tr>
 			          									<td><%= timeslot.getDate() %></td>
-			          									<td><%= timeslot.getTime() %></td>
+			          									<td><%= UtilTimeslot.getFormattedTime(timeslot.getStartTime(), timeslot.getEndTime()) %></td>
 			          									<td><%= timeslot.getOccupancy() %></td>
 			          								</tr>
 			          					<% } %>

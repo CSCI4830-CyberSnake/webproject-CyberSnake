@@ -70,16 +70,16 @@
 			<table>
 				<form action="CreateAccount" method="POST">
 	
-        			<div id="block">User-name: <input type="text" name="username"> <br /></div>
-        			<div id="block">First Name: <input type="text" name="firstName"> <br /></div>
-        			<div id="block">Last Name: <input type="text" name="lastName"> <br /></div>
-        			<div id="block">Address: <input type="text" name="address"> <br /></div>
-        			<div id="block">City: <input type="text" name="city"> <br /></div>
-        			<div id="block">State: <input type="text" name="state"> <br /></div>
-        			<div id="block">Zip Code: <input type="text" name="zip"> <br /></div>
-        			<div id="block">Email: <input type="text" name="email"> <br /></div>
-        			<div id="block">Phone: <input type="text" name="phone"> <br /></div>
-        			<div id="block">Password: <input type="password" name="password"> <br /></div>
+        			<div id="block">User-name: <input type="text" name="username" required> <br /></div>
+        			<div id="block">First Name: <input type="text" name="firstName" required> <br /></div>
+        			<div id="block">Last Name: <input type="text" name="lastName" required> <br /></div>
+        			<div id="block">Address: <input type="text" name="address" required> <br /></div>
+        			<div id="block">City: <input type="text" name="city" required> <br /></div>
+        			<div id="block">State: <input type="text" name="state" required> <br /></div>
+        			<div id="block">Zip Code: <input type="text" name="zip" required> <br /></div>
+        			<div id="block">Email: <input type="text" name="email" required> <br /></div>
+        			<div id="block">Phone: <input type="text" name="phone" required> <br /></div>
+        			<div id="block">Password: <input type="password" name="password" required> <br /></div>
         			<div id="block">Admin Code: <input type="text" name="admin"> <br /><em>**only for Admin Accounts**</em></div>
         			<div id="block"><input type="submit" value="Create Account" /></div>
   

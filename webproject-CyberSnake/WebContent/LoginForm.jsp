@@ -52,10 +52,10 @@
 			<form action="Login" method="POST">
 
 				<div id="block">
-					User-name: <input type="text" name="username"> <br />
+					User-name: <input type="text" name="username" required> <br />
 				</div>
 				<div id="block">
-					Password: <input type="password" name="password"> <br />
+					Password: <input type="password" name="password" required> <br />
 				</div>
 				<div id="block">
 					<input type="submit" value="Log In" />
