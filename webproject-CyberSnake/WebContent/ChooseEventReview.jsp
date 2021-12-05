@@ -45,7 +45,7 @@
 
 				<% 
 				Account account = (Account) session.getAttribute("account");
-				List<Register> passedRegs = UtilRegister.listPassed(account.getUsername());
+				List<Timeslot> passedRegs = UtilRegister.listPassed(account.getUsername());
 				
 				if( passedRegs.size() == 0 ) { %>
 					<div id="block">
@@ -53,9 +53,8 @@
 					</div>
 				<% } else { 
 					int counter = 1;
-					for(Register reg: passedRegs) { 
-						Timeslot timeslot = UtilTimeslot.getTimeslot(reg.getTimeslotId());
-						Event event = UtilEvent.getEvent(timeslot.getEventId()); %>
+					for(Timeslot reg: passedRegs) { 
+						Event event = UtilEvent.getEvent(reg.getEventId()); %>
 
 						<div id="block">
 							<input type="radio" id="<%= counter %>" name="eventId" value="<%= event.getEventId() %>" required> <label

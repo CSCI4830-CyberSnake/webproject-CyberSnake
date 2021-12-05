@@ -33,7 +33,7 @@
 						<li><a href="CreateEvent.jsp">Create Event</a></li>
 						<li><a href="">Add Time slot</a></li>
 					<% } %>
-					<li><a href="">Register</a></li>
+					<li><a href="ChooseEventRegister.jsp">Register</a></li>
 					<li><a href="">Cancel Registration</a></li>
 					<li><a href="ChooseEventReview.jsp">Make Review</a></li>
 					<li><a href="/webproject-CyberSnake/Logout">Log Out</a></li>
