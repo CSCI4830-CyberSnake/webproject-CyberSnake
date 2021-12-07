@@ -31,7 +31,7 @@
 				<ul class="nav_links">
 					<% if( account.getAdmin() ) {%>
 						<li><a href="CreateEvent.jsp">Create Event</a></li>
-						<li><a href="">Add Time slot</a></li>
+						<li><a href="ChooseEventTimeslot.jsp">Add Time slot</a></li>
 					<% } %>
 					<li><a href="ChooseEventRegister.jsp">Register</a></li>
 					<li><a href="ChooseEventCancel.jsp">Cancel Registration</a></li>
