@@ -36,9 +36,9 @@
       <div id="block">
         <h1>Time-slot Creation</h1>
       </div>
-      
+      <p>Convention Center Hours of Operation: <strong>Everyday 06:00AM - 12:00AM</strong></p>
       <% if(!request.getParameterMap().containsKey("valid")) { %>
-      	<em>Make sure to input the correct format:</em><br>
+      	<em>**Make sure to input the correct format, and within the hours of operation**</em><br>
       	date: <em>YYYY-MM-DD</em><br>
       	startTime: <em>HH:MM</em>  (24hr format)<br>
       	endTime: <em>HH:MM</em>  (24hr format)<br>

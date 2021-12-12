@@ -12,6 +12,7 @@ import org.hibernate.criterion.Restrictions;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import datamodel.Timeslot;
 
@@ -107,7 +108,7 @@ public class UtilTimeslot extends UtilDB{
 			List<?> timeslots = session.createCriteria(Timeslot.class).add(Restrictions.eq("eventId", eventId)).list();
 			for (Iterator<?> iterator = timeslots.iterator(); iterator.hasNext();) {
 				Timeslot timeslot = (Timeslot) iterator.next();
-				if( LocalDate.now().isBefore(LocalDate.parse(timeslot.getDate().toString())) &&
+				if( !LocalDate.now().isAfter(LocalDate.parse(timeslot.getDate().toString())) &&
 						timeslot.getOccupancy() > 0 )
 					resultList.add(timeslot);
 			}
@@ -222,6 +223,10 @@ public class UtilTimeslot extends UtilDB{
 		int start = UtilTimeslot.getIntTime(startTime);
 		int end = UtilTimeslot.getIntTime(endTime);
 		
+		// adjust for midnight
+		if( end == 0)
+			end = 2400;
+		
 		//for each existing timeslot check whether there is any overlap in time with new time
 		for(Timeslot timeslot: list) {
 			if( ( start >= UtilTimeslot.getIntTime(timeslot.getStartTime()) && 
@@ -232,6 +237,18 @@ public class UtilTimeslot extends UtilDB{
 		}
 		
 		return true;
+	}
+	
+	//returns true if the event is set to start in one hour or less
+	public static boolean inNextHour(Timeslot timeslot) {
+		if( !LocalDate.now().isEqual(LocalDate.parse(timeslot.getDate().toString())) )
+			return false;
+		int nowHour = LocalDateTime.now().getHour(); 
+		int startHour = UtilTimeslot.getIntTime(timeslot.getStartTime()) / 100;
+		if( startHour - nowHour <= 1)
+			return true;
+		else 
+			return false;
 	}
 	
 	//transforms time from 24hr format to 12hr format. example: 13:45 to 1:45pm

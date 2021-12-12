@@ -46,6 +46,11 @@ public class AddTimeslot extends HttpServlet {
 			//response.sendRedirect("CreateTimeslot.jsp");
 		}
 		
+		else if( UtilTimeslot.getIntTime(startTime) < 600 || (UtilTimeslot.getIntTime(endTime) > 0 && UtilTimeslot.getIntTime(endTime) < 600) ) {
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CreateTimeslot.jsp");
+			dispatcher.forward(request, response);
+		}
+		
 		else {
 		
 			Date dt = Date.valueOf(date);
@@ -63,7 +68,7 @@ public class AddTimeslot extends HttpServlet {
 				time = 1;
 				response.sendRedirect("UserAccount.jsp?time=" + time);
 			}
-		}
-	}
+		} 
+	} 
 
 }

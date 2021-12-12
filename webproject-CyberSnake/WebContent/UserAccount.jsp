@@ -144,7 +144,11 @@
 							Event ev = UtilEvent.getEvent(timeslot.getEventId());
 							%>
 							<tr>
-								<td><%= ev.getName() %></td>
+								<td><%= ev.getName() %>
+								<% if(UtilTimeslot.inNextHour(timeslot)) { %>
+									<button class="button" type="button" onclick="alert('<%= ev.getName() %> starts in less than one hour!')">Checked In!</button>
+								<% } %>
+								</td>
 	          					<td><%= timeslot.getDate() %></td>
 	          					<td><%= UtilTimeslot.getFormattedTime(timeslot.getStartTime(), timeslot.getEndTime()) %></td>
 	          				</tr>

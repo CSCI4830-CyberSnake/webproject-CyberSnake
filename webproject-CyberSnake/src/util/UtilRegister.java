@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import datamodel.Register;
 import datamodel.Timeslot;
@@ -88,7 +89,10 @@ public class UtilRegister extends UtilDB{
 				Timeslot timeslot = UtilTimeslot.getTimeslot(register.getTimeslotId());
 				String date = timeslot.getDate().toString();
 				
-				if( !LocalDate.now().isAfter(LocalDate.parse(date)) )
+				int nowHour = LocalDateTime.now().getHour(); 
+				int endHour = UtilTimeslot.getIntTime(timeslot.getEndTime()) / 100;
+				if( LocalDate.now().isBefore(LocalDate.parse(date)) ||
+						(LocalDate.now().isEqual(LocalDate.parse(date)) && nowHour < endHour) )
 					resultList.add(timeslot);
 				
 			}
@@ -122,7 +126,10 @@ public class UtilRegister extends UtilDB{
 				Timeslot timeslot = UtilTimeslot.getTimeslot(register.getTimeslotId());
 				String date = timeslot.getDate().toString();
 				
-				if( !LocalDate.now().isBefore(LocalDate.parse(date)) )
+				int nowHour = LocalDateTime.now().getHour(); 
+				int endHour = UtilTimeslot.getIntTime(timeslot.getEndTime()) / 100;
+				if( LocalDate.now().isAfter(LocalDate.parse(date)) ||
+						(LocalDate.now().isEqual(LocalDate.parse(date)) && nowHour > endHour) )
 					resultList.add(timeslot);
 			}
 			tx.commit();
