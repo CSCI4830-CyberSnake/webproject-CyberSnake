@@ -12,6 +12,25 @@
     
 }
 
+.button {
+  border: 3px solid #15c439;
+  color: #15c439;
+  background-color: #383b54;
+  padding: 8px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
 .alert0 {
   padding: 20px;
   background-color: #15c439;
@@ -52,6 +71,11 @@ td, th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
+}
+
+th {
+  background-color: #484c6b;
+  text-align: center;
 }
 
 tr:nth-child(even) {

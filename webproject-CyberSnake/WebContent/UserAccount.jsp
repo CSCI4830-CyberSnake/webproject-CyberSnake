@@ -31,10 +31,10 @@
 				<ul class="nav_links">
 					<% if( account.getAdmin() ) {%>
 						<li><a href="CreateEvent.jsp">Create Event</a></li>
-						<li><a href="">Add Time slot</a></li>
+						<li><a href="ChooseEventTimeslot.jsp">Add Time slot</a></li>
 					<% } %>
 					<li><a href="ChooseEventRegister.jsp">Register</a></li>
-					<li><a href="">Cancel Registration</a></li>
+					<li><a href="ChooseEventCancel.jsp">Cancel Registration</a></li>
 					<li><a href="ChooseEventReview.jsp">Make Review</a></li>
 					<li><a href="/webproject-CyberSnake/Logout">Log Out</a></li>
 				</ul>
@@ -144,7 +144,11 @@
 							Event ev = UtilEvent.getEvent(timeslot.getEventId());
 							%>
 							<tr>
-								<td><%= ev.getName() %></td>
+								<td><%= ev.getName() %>
+								<% if(UtilTimeslot.inNextHour(timeslot)) { %>
+									<button class="button" type="button" onclick="alert('<%= ev.getName() %> starts in less than one hour!')">Checked In!</button>
+								<% } %>
+								</td>
 	          					<td><%= timeslot.getDate() %></td>
 	          					<td><%= UtilTimeslot.getFormattedTime(timeslot.getStartTime(), timeslot.getEndTime()) %></td>
 	          				</tr>
